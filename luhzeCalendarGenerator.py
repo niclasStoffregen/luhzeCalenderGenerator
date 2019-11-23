@@ -395,7 +395,7 @@ def createPlaceTimePrice(box, string, font, style):
 
  
 def RepresentsInt(s):
-    #checks if a givin string in an integer
+    #checks if a given string in an integer
     try: 
         int(s)
         return True

@@ -1,6 +1,6 @@
 # generator for the luhze calendar
 ---
-Generates the scribus elements for a givin .csv file
+Generates the scribus elements for a given .csv file
 
 ## Note:
 * the scripts only runs inside the scribus enviroment
