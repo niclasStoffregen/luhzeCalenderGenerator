@@ -2,7 +2,7 @@
 ---
 Generates the scribus elements 
 
-##Note:
+## Note:
 * the scripts only runs inside the scribus enviroment
 * go to Script->Execute Script to run the script
 * save the spreadsheet file as a .csv file with tab as the separator
