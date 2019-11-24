@@ -117,65 +117,65 @@ def generateContent(string,window):
     
     lineWidth = 3.92 #aka 1.383mm, kp warum
 
-
-    #create show of luhze ascii sign
-    luhze = """                                        `..---------------.``                                        
-                                `.-----..`               `.------.                                  
-                            `----.`                             `.----`                             
-                        `.-:.`                                       `-:-.                          
-                      .--`                                              `.--.                       
-                   .--`                                                    `.:-`                    
-                 .:-`                                                         `-:.                  
-               .:.                                                              `-:.                
-             `:-                                                                  `-:`              
-            -:`                                                                     `:-             
-          `:.                                                                         -:`           
-         .:`                                                                           `/.          
-        -:                                                                              `:.         
-       -:                                                                                 :.        
-      -:                                                                                   /.       
-     ./                                                                                    `/`      
-     +`  ````                          ````                                                 ./      
-    :- `:/oos.                       `:/oos.                                                 :-     
-   `+     oss.                          oss.                                                 `+     
-   :-     oss.                          oss.                                                  :.    
-   +      oss.                          oss.    ``                                ``          ./    
-   +      oss.   -/+oo+     -/+oo+      oss.`:/+oooo/`     -+++/::::/+++-    `-/+/::/+/-       +    
-  ./      oss.     :ss+       -ss+      osso:`   `:sso`    :o.     -oso-    -os/     .oso`     +    
-  .:      oss.     -ss+       -ss+      oss-       +ss-    .:     /ss+`    .sso       +ss/     /`   
-  .:      oss.     -ss+       -ss+      oss.       +ss-         .oso-      /sso///////oss+     /`   
-  ./      oss.     -ss+       -ss+      oss.       +ss-        :ss+`       +ss+                +    
-  `+      oss.     -ss+       -ss+      oss.       +ss-      `+ss:      `  /sso                +    
-   +      oss.     -sso       /ss+      oss.       +ss-     -oso.      .o` `oss:       `+-    ./    
-   :-   ``oss:`     +ss+-...://sso``  ``oss:`    ``oss/`  `/ss+.`````.:oo   .+ss+-.`..:+:     :.    
-   `+  .:::::::-     -////:-` `:::::``:::::::-  `:::::::- -::::::::::::::     .-/////:-`      +     
-    :.                                                                                       :-     
-    `+`                                                                                     `/      
-     ./                                                                                     /`      
-      -:                                                                                   /.       
-       :-                                                                                 :-        
-        :-                                                                               :-         
-         -:`                                                                           `:.          
-          .:.                                                                         .:`           
-           `:-`                                                                     `:-             
-             .:.                                                                  `-:`              
-               -:.                                                              `.:.                
-                 -:.`                                                         `-:.                  
-                   .:-`                                                     `--.                    
-                     `-:-`                                               `--.`                      
-                        `---.`                                       `.--.`                         
-                            .---.`                               `----.                             
-                                `.-----.`                ``.-----.`                                 
-                                      `..-----------------.``         """                              
-    
-    luhzeBox = scribus.createText(0,30,231,300)
-    scribus.insertText(luhze,0,luhzeBox)
-    scribus.selectText(0,scribus.getTextLength(luhzeBox),luhzeBox)
-    scribus.setFont("Liberation Mono Regular",luhzeBox)
-    scribus.selectText(0,scribus.getTextLength(luhzeBox),luhzeBox)
-    scribus.setTextScalingH(127,luhzeBox)
-    print(luhze)
-    
+    if string == "all":
+        #create show of luhze ascii sign
+        luhze = """                                        `..---------------.``                                        
+                                    `.-----..`               `.------.                                  
+                                `----.`                             `.----`                             
+                            `.-:.`                                       `-:-.                          
+                          .--`                                              `.--.                       
+                       .--`                                                    `.:-`                    
+                     .:-`                                                         `-:.                  
+                   .:.                                                              `-:.                
+                 `:-                                                                  `-:`              
+                -:`                                                                     `:-             
+              `:.                                                                         -:`           
+             .:`                                                                           `/.          
+            -:                                                                              `:.         
+           -:                                                                                 :.        
+          -:                                                                                   /.       
+         ./                                                                                    `/`      
+         +`  ````                          ````                                                 ./      
+        :- `:/oos.                       `:/oos.                                                 :-     
+       `+     oss.                          oss.                                                 `+     
+       :-     oss.                          oss.                                                  :.    
+       +      oss.                          oss.    ``                                ``          ./    
+       +      oss.   -/+oo+     -/+oo+      oss.`:/+oooo/`     -+++/::::/+++-    `-/+/::/+/-       +    
+      ./      oss.     :ss+       -ss+      osso:`   `:sso`    :o.     -oso-    -os/     .oso`     +    
+      .:      oss.     -ss+       -ss+      oss-       +ss-    .:     /ss+`    .sso       +ss/     /`   
+      .:      oss.     -ss+       -ss+      oss.       +ss-         .oso-      /sso///////oss+     /`   
+      ./      oss.     -ss+       -ss+      oss.       +ss-        :ss+`       +ss+                +    
+      `+      oss.     -ss+       -ss+      oss.       +ss-      `+ss:      `  /sso                +    
+       +      oss.     -sso       /ss+      oss.       +ss-     -oso.      .o` `oss:       `+-    ./    
+       :-   ``oss:`     +ss+-...://sso``  ``oss:`    ``oss/`  `/ss+.`````.:oo   .+ss+-.`..:+:     :.    
+       `+  .:::::::-     -////:-` `:::::``:::::::-  `:::::::- -::::::::::::::     .-/////:-`      +     
+        :.                                                                                       :-     
+        `+`                                                                                     `/      
+         ./                                                                                     /`      
+          -:                                                                                   /.       
+           :-                                                                                 :-        
+            :-                                                                               :-         
+             -:`                                                                           `:.          
+              .:.                                                                         .:`           
+               `:-`                                                                     `:-             
+                 .:.                                                                  `-:`              
+                   -:.                                                              `.:.                
+                     -:.`                                                         `-:.                  
+                       .:-`                                                     `--.                    
+                         `-:-`                                               `--.`                      
+                            `---.`                                       `.--.`                         
+                                .---.`                               `----.                             
+                                    `.-----.`                ``.-----.`                                 
+                                          `..-----------------.``         """                              
+        
+        luhzeBox = scribus.createText(0,30,231,300)
+        scribus.insertText(luhze,0,luhzeBox)
+        scribus.selectText(0,scribus.getTextLength(luhzeBox),luhzeBox)
+        scribus.setFont("Liberation Mono Regular",luhzeBox)
+        scribus.selectText(0,scribus.getTextLength(luhzeBox),luhzeBox)
+        scribus.setTextScalingH(127,luhzeBox)
+        print(luhze)
+        
         
     date=""
     for i in range(start, end):
