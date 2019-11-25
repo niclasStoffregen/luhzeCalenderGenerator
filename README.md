@@ -1,5 +1,5 @@
 # generator for the luhze calendar
----
+
 Generates the scribus elements for a given .csv file
 
 ## Note:
