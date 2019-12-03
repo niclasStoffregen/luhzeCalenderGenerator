@@ -87,11 +87,12 @@ def dateFun(date):
 def generateContent(string,window):
 
     #generates all the elements/only one element
-    start = 1 #dont include the header line with the description
+    start = 0 
     end = 0
     if string == "all":
+        #dont include the first line to make the data sort work [1:]
         #sort the the elements by date
-        data = sorted(getCSVdata(), key = lambda row: dateFun(row[5]), reverse=True)
+        data = sorted(getCSVdata()[1:], key = lambda row: dateFun(row[5]), reverse=True)
         end = len(data)
         print(str(end) + "  "  + str(start))
         print("generating elements from all lines")
@@ -116,72 +117,13 @@ def generateContent(string,window):
     scribus.setUnit(scribus.UNIT_MILLIMETERS)
     
     lineWidth = 3.92 #aka 1.383mm, kp warum
-
-    if string == "all":
-        #create show of luhze ascii sign
-        luhze = """                                        `..---------------.``                                        
-                                    `.-----..`               `.------.                                  
-                                `----.`                             `.----`                             
-                            `.-:.`                                       `-:-.                          
-                          .--`                                              `.--.                       
-                       .--`                                                    `.:-`                    
-                     .:-`                                                         `-:.                  
-                   .:.                                                              `-:.                
-                 `:-                                                                  `-:`              
-                -:`                                                                     `:-             
-              `:.                                                                         -:`           
-             .:`                                                                           `/.          
-            -:                                                                              `:.         
-           -:                                                                                 :.        
-          -:                                                                                   /.       
-         ./                                                                                    `/`      
-         +`  ````                          ````                                                 ./      
-        :- `:/oos.                       `:/oos.                                                 :-     
-       `+     oss.                          oss.                                                 `+     
-       :-     oss.                          oss.                                                  :.    
-       +      oss.                          oss.    ``                                ``          ./    
-       +      oss.   -/+oo+     -/+oo+      oss.`:/+oooo/`     -+++/::::/+++-    `-/+/::/+/-       +    
-      ./      oss.     :ss+       -ss+      osso:`   `:sso`    :o.     -oso-    -os/     .oso`     +    
-      .:      oss.     -ss+       -ss+      oss-       +ss-    .:     /ss+`    .sso       +ss/     /`   
-      .:      oss.     -ss+       -ss+      oss.       +ss-         .oso-      /sso///////oss+     /`   
-      ./      oss.     -ss+       -ss+      oss.       +ss-        :ss+`       +ss+                +    
-      `+      oss.     -ss+       -ss+      oss.       +ss-      `+ss:      `  /sso                +    
-       +      oss.     -sso       /ss+      oss.       +ss-     -oso.      .o` `oss:       `+-    ./    
-       :-   ``oss:`     +ss+-...://sso``  ``oss:`    ``oss/`  `/ss+.`````.:oo   .+ss+-.`..:+:     :.    
-       `+  .:::::::-     -////:-` `:::::``:::::::-  `:::::::- -::::::::::::::     .-/////:-`      +     
-        :.                                                                                       :-     
-        `+`                                                                                     `/      
-         ./                                                                                     /`      
-          -:                                                                                   /.       
-           :-                                                                                 :-        
-            :-                                                                               :-         
-             -:`                                                                           `:.          
-              .:.                                                                         .:`           
-               `:-`                                                                     `:-             
-                 .:.                                                                  `-:`              
-                   -:.                                                              `.:.                
-                     -:.`                                                         `-:.                  
-                       .:-`                                                     `--.                    
-                         `-:-`                                               `--.`                      
-                            `---.`                                       `.--.`                         
-                                .---.`                               `----.                             
-                                    `.-----.`                ``.-----.`                                 
-                                          `..-----------------.``         """                              
-        
-        luhzeBox = scribus.createText(0,30,231,300)
-        scribus.insertText(luhze,0,luhzeBox)
-        scribus.selectText(0,scribus.getTextLength(luhzeBox),luhzeBox)
-        scribus.setFont("Liberation Mono Regular",luhzeBox)
-        scribus.selectText(0,scribus.getTextLength(luhzeBox),luhzeBox)
-        scribus.setTextScalingH(127,luhzeBox)
-        print(luhze)
-        
         
     date=""
     for i in range(start, end):
 
         print("add element: "  + data[i][0])
 
+        #random values
         hpos=120.0
         vpos=200.0
         hposition=120.0
@@ -193,7 +135,7 @@ def generateContent(string,window):
         x=0 #sets the progress
         #create the blue box
         print("create the blue line")
-        blueBox = scribus.createLine(hposition,vposition,hposition,vposition + 5.863)
+        blueBox = scribus.createLine(hposition +1,vposition,hposition+1,vposition + 5.863)
         scribus.setLineColor("Cyan",blueBox)
         scribus.setLineWidth(lineWidth,blueBox)
         objectlist.append(blueBox)
@@ -221,7 +163,7 @@ def generateContent(string,window):
         margintop=0.519 #substract, cause the box is heigher that the blue line
         cellwidthright = 10.951
         cellHeight = 8.282
-        hposition = hposition + marginleft
+        hposition = hposition + marginleft + 1
         textbox = scribus.createText(hposition,vposition - margintop,cellwidthright, cellHeight)
         scribus.setFont("Quicksand Regular", textbox)
         scribus.setFontSize(20.0,textbox)
@@ -317,7 +259,8 @@ def generateContent(string,window):
         #create the main text box
         print("create the main text box")
         margintop = 5.5
-        mainTextBox = scribus.createText(hpos - 1, vposition + margintop, 43.0,66.0) #minus eins weil der blaue balken seinen kasten overflowed
+        hpos = hpos - 0.383 #i dont know why but scribus always places the element 0.383 right than it should be :/
+        mainTextBox = scribus.createText(hpos, vposition + margintop, 43.0,45.0) #minus eins weil der blaue balken seinen kasten overflowed
 
         #insert category
         print("insert the category: "  + data[i][1])
