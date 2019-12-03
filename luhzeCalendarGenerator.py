@@ -36,7 +36,7 @@ Author: Niclas Stoffregen
 """
 
 import sys
-import rowDatetime
+import datetime
 import time
 from Tkinter import *
 import csv
@@ -331,6 +331,7 @@ def generateContent(string,window):
 
     print("done")
     return 0
+
 
 def createPlaceTimePrice(box, string, font, style):
 
