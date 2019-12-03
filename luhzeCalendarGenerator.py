@@ -73,13 +73,13 @@ def getCSVdata():
         sys.exit
 
 
-def rowDateFun(rowDate):
-  string_rowDate = rowDate
+def dateFun(date):
+  string_date = date
   format = "%d.%m.%Y"
   try:
-      res = rowDatetime.rowDatetime.strptime(string_rowDate, format)
+      res = datetime.datetime.strptime(string_date, format)
   except TypeError:
-      res = rowDatetime.rowDatetime(*(time.strptime(string_rowDate, format)[0:6]))
+      res = datetime.datetime(*(time.strptime(string_date, format)[0:6]))
   return res # testcompete print alternation
 
 
@@ -91,8 +91,8 @@ def generateContent(string,window):
     end = 0
     if string == "all":
         #dont include the first line to make the data sort work [1:]
-        #sort the the elements by rowDate
-        data = sorted(getCSVdata()[1:], key = lambda row: rowDateFun(str.strip(row[5])), reverse=True)
+        #sort the the elements by date
+        data = sorted(getCSVdata()[1:], key = lambda row: dateFun(str.strip(row[5])), reverse=True)
         end = len(data)
         print(str(end) + "  "  + str(start))
         print("generating elements from all lines")
