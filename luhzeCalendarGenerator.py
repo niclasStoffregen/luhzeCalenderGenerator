@@ -36,7 +36,7 @@ Author: Niclas Stoffregen
 """
 
 import sys
-import datetime
+import rowDatetime
 import time
 from Tkinter import *
 import csv
@@ -73,13 +73,13 @@ def getCSVdata():
         sys.exit
 
 
-def dateFun(date):
-  string_date = date
+def rowDateFun(rowDate):
+  string_rowDate = rowDate
   format = "%d.%m.%Y"
   try:
-      res = datetime.datetime.strptime(string_date, format)
+      res = rowDatetime.rowDatetime.strptime(string_rowDate, format)
   except TypeError:
-      res = datetime.datetime(*(time.strptime(string_date, format)[0:6]))
+      res = rowDatetime.rowDatetime(*(time.strptime(string_rowDate, format)[0:6]))
   return res # testcompete print alternation
 
 
@@ -91,8 +91,8 @@ def generateContent(string,window):
     end = 0
     if string == "all":
         #dont include the first line to make the data sort work [1:]
-        #sort the the elements by date
-        data = sorted(getCSVdata()[1:], key = lambda row: dateFun(row[5]), reverse=True)
+        #sort the the elements by rowDate
+        data = sorted(getCSVdata()[1:], key = lambda row: rowDateFun(str.strip(row[5])), reverse=True)
         end = len(data)
         print(str(end) + "  "  + str(start))
         print("generating elements from all lines")
@@ -118,10 +118,22 @@ def generateContent(string,window):
     
     lineWidth = 3.92 #aka 1.383mm, kp warum
         
-    date=""
+    rowDate=""
     for i in range(start, end):
 
-        print("add element: "  + data[i][0])
+        rowName = str.strip(data[i][0])
+        rowCategory = str.strip(data[i][1])
+        rowDescription = str.strip(data[i][2])
+        rowPrice = str.strip(data[i][3])
+        rowPlace = str.strip(data[i][4])
+        rowDate = str.strip(data[i][5])
+        rowTime = str.strip(data[i][6])
+
+
+        if rowName = "": #skip empty csv lines
+            continue
+
+        print("add element: "  + rowName)
 
         #random values
         hpos=120.0
@@ -158,7 +170,6 @@ def generateContent(string,window):
 
         lenArray = [zero,one,two,three,four,five,six,seven,eight,nine]
 
-        date=data[i][5]
         marginleft=1.3
         margintop=0.519 #substract, cause the box is heigher that the blue line
         cellwidthright = 10.951
@@ -168,15 +179,15 @@ def generateContent(string,window):
         scribus.setFont("Quicksand Regular", textbox)
         scribus.setFontSize(20.0,textbox)
         finalDate = ""
-        dateLength = 0
-        #checks if the date is from 01-09, in that case remove the zero
-        if date[0] == '0':
-            finalDate = date[1]
-            dateLength = lenArray[int(date[1])]
+        rowDateLength = 0
+        #checks if the rowDate is from 01-09, in that case remove the zero
+        if rowDate[0] == '0':
+            finalDate = rowDate[1]
+            rowDateLength = lenArray[int(rowDate[1])]
             
         else:
-            finalDate = date[:2]
-            dateLength = lenArray[int(date[0])] + lenArray[int(date[1])]
+            finalDate = rowDate[:2]
+            rowDateLength = lenArray[int(rowDate[0])] + lenArray[int(rowDate[1])]
             
 
         scribus.insertText(finalDate,0,textbox)
@@ -190,7 +201,7 @@ def generateContent(string,window):
         print("create the box with the day and month")
         width=19.447
         height=8.025
-        marginleft = dateLength #gain that from the calculations above, depends on the width of the date characters
+        marginleft = rowDateLength #gain that from the calculations above, depends on the width of the rowDate characters
 
 
         monthBox = scribus.createText(hposition + marginleft + 0.7, vposition,width,height)
@@ -198,7 +209,7 @@ def generateContent(string,window):
         scribus.setFontSize(8.5,monthBox)
 
         month=""
-        m=date[3:5]
+        m=rowDate[3:5]
         if m == '01':
             month="Januar"
         elif m == '02':
@@ -227,7 +238,7 @@ def generateContent(string,window):
             print("cant determine month!")
 
 
-        day = datetime.date(int(date[6:]),int(m),int(date[:2])).weekday()
+        day = rowDatetime.rowDate(int(rowDate[6:]),int(m),int(rowDate[:2])).weekday()
         dayName = ""
 
         if day==0:
@@ -263,8 +274,8 @@ def generateContent(string,window):
         mainTextBox = scribus.createText(hpos, vposition + margintop, 43.0,45.0) #minus eins weil der blaue balken seinen kasten overflowed
 
         #insert category
-        print("insert the category: "  + data[i][1])
-        scribus.insertText(data[i][1],0,mainTextBox)
+        print("insert the category: "  + rowCategory)
+        scribus.insertText(rowCategory,0,mainTextBox)
         endCategory = scribus.getTextLength(mainTextBox)
         scribus.selectText(0,endCategory,mainTextBox)
         scribus.setFontSize(10.5,mainTextBox)
@@ -273,7 +284,7 @@ def generateContent(string,window):
         
         #insert main text
         print("insert the main text")
-        scribus.insertText("\n" + data[i][2],endCategory,mainTextBox)
+        scribus.insertText("\n" + rowDescription,endCategory,mainTextBox)
         endMainText = scribus.getTextLength(mainTextBox)-endCategory
         scribus.selectText(endCategory, endMainText, mainTextBox)
         scribus.setStyle("Kalender_Eventbeschreibung", mainTextBox)  
@@ -283,19 +294,19 @@ def generateContent(string,window):
         createPlaceTimePrice(mainTextBox,"\n| Ort: ", "", "Kalender_Eventname")
        
         #insert value for place
-        createPlaceTimePrice(mainTextBox, data[i][4], "Heuristica Regular","")
+        createPlaceTimePrice(mainTextBox, rowPlace, "Heuristica Regular","")
        
         #insert time letters
         createPlaceTimePrice(mainTextBox," | Zeit: ", "Quicksand Regular","")
        
         #insert time value
-        createPlaceTimePrice(mainTextBox,data[i][6], "Heuristica Regular","")
+        createPlaceTimePrice(mainTextBox,rowTime, "Heuristica Regular","")
 
         #insert price letters
         createPlaceTimePrice(mainTextBox," | Eintritt: ", "Quicksand Regular","")
         
         #insert price value
-        createPlaceTimePrice(mainTextBox,data[i][3], "Heuristica Regular","")
+        createPlaceTimePrice(mainTextBox,rowPrice, "Heuristica Regular","")
         
 
         #setFontSize and black color for the whole detail box
