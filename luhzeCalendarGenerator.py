@@ -130,7 +130,7 @@ def generateContent(string,window):
         rowTime = str.strip(data[i][6])
 
 
-        if rowName = "": #skip empty csv lines
+        if rowName == "": #skip empty csv lines
             continue
 
         print("add element: "  + rowName)
@@ -238,7 +238,7 @@ def generateContent(string,window):
             print("cant determine month!")
 
 
-        day = rowDatetime.rowDate(int(rowDate[6:]),int(m),int(rowDate[:2])).weekday()
+        day = datetime.date(int(rowDate[6:]),int(m),int(rowDate[:2])).weekday()
         dayName = ""
 
         if day==0:
